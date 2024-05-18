@@ -6,7 +6,7 @@ O Desafio foi feito, darei um resumo de como foi feito e as decisões que tomei.
 #### 1- O sistema foi contruído com base na descrição e nos requisitos.
 #### 2- Variáveis de ambiente 
    * As variáveis e o limite foram definidos no environment do docker-compose,
-   * Ou seja, caso queiram mudar o limite do ip pasta mudar o valor da chave LIMIT, no momento o valor é 6
+   * Ou seja, caso queiram mudar o limite do ip basta mudar o valor da chave LIMIT, no momento o valor é 6
    * O tempo de expiração do LIMITE de requisições é 5 minutos, isso já foi definido ao salvar o limite no "REDIS", ou seja, quando o limite 
 de requisições for alcançado, só depois de 5 minutos poderá ser feito novas requisições.
    * "Token" pode ser informado pelo header como vocês sugeriram na descrição, considerei que o "token" é a quantidade de requisições, 

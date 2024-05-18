@@ -56,9 +56,6 @@ func rateLimiterMiddleware(next http.Handler) http.Handler {
 			token = "0"
 		}
 
-		println("TOKEN LIMIT: ", token)
-		println("IP QUE CHEGOU: ", ip)
-
 		// Verifica se há um limite configurado para o endereço IP
 		ipLimit, err := getRateLimitFromRedis(ip)
 		if err != nil {
@@ -151,9 +148,5 @@ func getRateLimitFromRedis(key string) (int, error) {
 	if err != nil && err != redis.Nil {
 		return 0, err
 	}
-
-	println("Key: ", key)
-	println("limit recuperado: ", limit)
-
 	return limit, nil
 }
