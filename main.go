@@ -19,18 +19,51 @@ var (
 	mutex             sync.Mutex
 )
 
+type RedisConnectionStrategy interface {
+	Connect() *redis.Client
+}
+
+type DefaultRedisConnectionStrategy struct {
+	Host     string
+	Port     string
+	Password string
+	DB       int
+}
+
+func (s *DefaultRedisConnectionStrategy) Connect() *redis.Client {
+	return redis.NewClient(&redis.Options{
+		Addr:     fmt.Sprintf("%s:%s", s.Host, s.Port),
+		Password: s.Password,
+		DB:       s.DB,
+	})
+}
+
+type RedisClient struct {
+	strategy RedisConnectionStrategy
+	client   *redis.Client
+}
+
+func NewRedisClient(strategy RedisConnectionStrategy) *RedisClient {
+	client := strategy.Connect()
+
+	return &RedisClient{
+		strategy: strategy,
+		client:   client,
+	}
+}
+
 func main() {
 	redisHost := os.Getenv("REDIS_HOST")
 	redisPort := os.Getenv("REDIS_PORT")
 
-	//log.Printf("REDIS_HOST: %s", redisHost)
-	//log.Printf("REDIS_PORT: %s", redisPort)
-
-	redisClient = redis.NewClient(&redis.Options{
-		Addr:     fmt.Sprintf("%s:%s", redisHost, redisPort),
+	strategy := &DefaultRedisConnectionStrategy{
+		Host:     redisHost,
+		Port:     redisPort,
 		Password: "",
 		DB:       0,
-	})
+	}
+
+	redisClient = NewRedisClient(strategy).client
 
 	router := mux.NewRouter()
 

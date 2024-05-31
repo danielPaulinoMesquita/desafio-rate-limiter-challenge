@@ -2,6 +2,10 @@
 
 O Desafio foi feito, darei um resumo de como foi feito e as decisões que tomei. 
 
+
+### OBS: Foi solicitado o strategy, mas eu não tinha feito, eu tinha criado a instância do redis direto, 
+#### mas agora coloquei o padrão strategy. COMEÇA NA LINHA 22 E TERMINA NA LINHA 53
+
 ## CONSTRUÇÃO: 
 #### 1- O sistema foi contruído com base na descrição e nos requisitos.
 #### 2- Variáveis de ambiente 
